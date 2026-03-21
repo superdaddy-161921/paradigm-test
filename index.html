@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>패러다임 자가진단 | 성공을 디자인하라</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJNV6DHSGC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-KJNV6DHSGC');</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap');
+:root{
+  --navy:#1B2A4A;--navy-light:#2C3E5F;
+  --teal:#1A8F6A;--teal-hover:#22B07F;--teal-subtle:rgba(26,143,106,0.08);
+  --warm-bg:#F7F6F3;--warm-bg-deep:#EFEDE8;--card:#FFFFFF;
+  --text:#1F2937;--text-sub:#6B7280;--text-light:#9CA3AF;
+  --border:#E8E6E1;--border-light:#F0EEEA;
+  --shadow:0 2px 16px rgba(31,41,55,0.06);--shadow-lg:0 6px 32px rgba(31,41,55,0.1);
+  --radius:18px;--radius-sm:12px;
+  --neu-bg:#EEECE7;--neu-light:rgba(255,255,255,0.8);--neu-dark:rgba(174,170,162,0.35);
+  --type-a:#C44040;--type-a-bg:#FDF0EF;--type-a-line:#E8A5A5;
+  --type-b:#B8750A;--type-b-bg:#FDF5E8;--type-b-line:#E0C17A;
+  --type-c:#6558D3;--type-c-bg:#F2F0FE;--type-c-line:#B5AFEC;
+  --type-d:#148A5E;--type-d-bg:#EDF9F3;--type-d-line:#82CDAA;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--warm-bg);color:var(--text);min-height:100vh;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+.container{max-width:560px;margin:0 auto;padding:16px}
+
+/* ===== SHARED: top accent line ===== */
+.accent-line{width:48px;height:3px;background:var(--teal);border-radius:2px;margin:0 auto 28px}
+
+/* ===== INTRO (light, warm) ===== */
+.intro-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--warm-bg);padding:48px 20px;position:relative}
+.intro{text-align:center;position:relative;max-width:480px}
+.intro .badge{display:inline-block;background:var(--navy);color:#fff;font-size:10px;font-weight:600;padding:5px 14px;border-radius:6px;margin-bottom:28px;letter-spacing:1.5px;text-transform:uppercase}
+.intro h1{font-family:'Playfair Display','Noto Sans KR',serif;font-size:27px;font-weight:900;line-height:1.5;margin-bottom:24px;color:var(--navy)}
+.intro h1 em{font-style:normal;color:var(--teal)}
+.intro .hook-text{font-size:14.5px;color:var(--text-sub);line-height:1.9;margin-bottom:24px;text-align:left;font-weight:400}
+.intro .hook-text strong{color:var(--text);font-weight:600}
+.intro .divider{width:100%;height:1px;background:var(--border);margin:24px 0}
+.intro .stats{display:flex;gap:12px;justify-content:center;margin:24px 0;flex-wrap:wrap}
+.intro .stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;text-align:center;min-width:100px;box-shadow:var(--shadow)}
+.intro .stat .num{font-size:22px;font-weight:700;color:var(--navy)}
+.intro .stat .label{font-size:10px;color:var(--text-light);margin-top:4px;letter-spacing:0.3px}
+.intro .social-proof{font-size:12px;color:var(--text-light);margin:20px 0 8px;line-height:1.6}
+.btn-start{display:inline-block;background:var(--teal);color:#fff;border:none;padding:18px 52px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;cursor:pointer;margin-top:28px;transition:all .25s;font-family:inherit;letter-spacing:0.3px;box-shadow:0 4px 16px rgba(26,143,106,0.25)}
+.btn-start:hover{background:var(--teal-hover);transform:translateY(-2px);box-shadow:0 6px 24px rgba(26,143,106,0.35)}
+.btn-start:active{transform:scale(0.97)}
+.intro .time-info{font-size:11px;color:var(--text-light);margin-top:14px;letter-spacing:0.3px}
+
+/* ===== PROGRESS ===== */
+.quiz-header{padding:20px 0 8px;text-align:center}
+.progress-text{font-size:13px;color:var(--text-sub);margin-bottom:10px;font-weight:500}
+.progress-bar{background:var(--border);height:4px;border-radius:2px;margin-bottom:24px;overflow:hidden}
+.progress-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+
+/* ===== QUESTION CARD ===== */
+.question-card{background:var(--card);border:1px solid var(--border-light);border-radius:var(--radius);padding:32px 24px;box-shadow:var(--shadow);animation:slideInRight .35s cubic-bezier(.25,.8,.25,1)}
+@keyframes slideInRight{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideOutLeft{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-50px)}}
+.question-card.exiting{animation:slideOutLeft .22s cubic-bezier(.4,0,1,1) forwards}
+.q-number{font-size:11px;font-weight:700;color:var(--teal);margin-bottom:20px;text-align:center;letter-spacing:2px}
+.q-statement{font-size:16px;font-weight:600;line-height:1.65;color:var(--text);text-align:center;margin-bottom:32px;padding:0 4px;word-break:keep-all}
+
+/* ===== BIPOLAR SELECTOR ===== */
+.bipolar-area{margin-bottom:24px}
+.bipolar-labels{display:flex;justify-content:space-between;gap:12px;margin-bottom:20px}
+.bipolar-label{flex:1;font-size:12.5px;line-height:1.55;color:var(--text-sub);padding:14px 10px;background:var(--warm-bg);border-radius:var(--radius-sm);text-align:center;transition:all .25s;border:1.5px solid transparent;font-weight:400;word-break:keep-all}
+.bipolar-label.active-l{border-color:var(--navy);background:rgba(27,42,74,0.06);color:var(--navy);font-weight:500;transform:scale(1.02)}
+.bipolar-label.active-r{border-color:var(--teal);background:var(--teal-subtle);color:#0F6B4A;font-weight:500;transform:scale(1.02)}
+
+.selector-row{display:flex;align-items:center;gap:0;justify-content:center;margin-bottom:8px}
+
+/* Neumorphic warm buttons */
+.neu-btn{
+  width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--neu-bg);
+  box-shadow:3px 3px 8px var(--neu-dark),-3px -3px 8px var(--neu-light);
+  transition:all .2s cubic-bezier(.4,0,.2,1);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;overflow:hidden;
+}
+.neu-btn:active{box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light)}
+.neu-btn .dot{width:0;height:0;border-radius:50%;transition:all .25s cubic-bezier(.4,0,.2,1);background:var(--navy)}
+.neu-btn.selected{box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light)}
+.neu-btn.selected .dot{width:18px;height:18px}
+.neu-btn.right-side .dot{background:var(--teal)}
+.neu-btn.center-neu{width:38px;height:38px}
+.neu-btn.center-neu .dot{background:var(--text-light)}
+.neu-btn.size-lg{width:52px;height:52px}
+.neu-btn.size-lg.selected .dot{width:24px;height:24px}
+
+.neu-btn .ripple{position:absolute;border-radius:50%;background:rgba(27,42,74,0.12);transform:scale(0);animation:rippleAnim .5s ease-out}
+.neu-btn.right-side .ripple{background:rgba(26,143,106,0.12)}
+@keyframes rippleAnim{to{transform:scale(3);opacity:0}}
+
+.selector-line{width:12px;height:2px;background:var(--border);flex-shrink:0}
+.selector-ticks{display:flex;justify-content:space-between;padding:0;margin-top:6px}
+.selector-tick{font-size:9px;color:var(--text-light);text-align:center;flex:1}
+
+.btn-next{display:block;width:100%;background:var(--navy);color:#fff;border:none;padding:16px;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;margin-top:24px;transition:all .3s;font-family:inherit;opacity:.2;pointer-events:none}
+.btn-next.active{opacity:1;pointer-events:auto;background:var(--teal);box-shadow:0 3px 12px rgba(26,143,106,0.2)}
+.btn-next.active:hover{background:var(--teal-hover);transform:translateY(-1px)}
+.btn-next:active{transform:scale(0.97)}
+
+
+/* ===== INSIGHT BREAK ===== */
+.insight-card{background:var(--card);border:1px solid var(--border-light);border-radius:var(--radius);padding:36px 24px;box-shadow:var(--shadow);text-align:center;animation:slideInRight .35s ease}
+.insight-icon{font-size:36px;margin-bottom:20px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.insight-title{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:14px;line-height:1.5}
+.insight-text{font-size:14px;color:var(--text-sub);line-height:1.85;margin-bottom:24px;text-align:left}
+.insight-text strong{color:var(--navy)}
+.insight-source{font-size:11px;color:var(--text-light);text-align:right;margin-bottom:24px}
+.btn-continue{display:block;width:100%;background:var(--teal);color:#fff;border:none;padding:16px;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-continue:hover{background:var(--teal-hover)}
+
+/* ===== LOADING ===== */
+.loading{text-align:center;padding:100px 20px}
+.loading-ring{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 28px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:15px;color:var(--text-sub);line-height:1.6;font-weight:500}
+.loading .loading-steps{margin-top:24px;text-align:left;max-width:260px;margin-left:auto;margin-right:auto}
+.loading .step{font-size:13px;color:var(--text-light);padding:8px 0;opacity:0;animation:stepIn .4s ease forwards;display:flex;align-items:center;gap:8px}
+.loading .step::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--border);flex-shrink:0;transition:background .3s}
+.loading .step.active{color:var(--teal);font-weight:500}
+.loading .step.active::before{background:var(--teal)}
+@keyframes stepIn{to{opacity:1}}
+
+/* ===== RESULT ===== */
+.result-card{background:var(--card);border:1px solid var(--border-light);border-radius:var(--radius);padding:0;box-shadow:var(--shadow-lg);overflow:hidden}
+.result-hero{padding:36px 24px 28px;text-align:center;background:var(--card);position:relative;animation:fadeDown .5s ease}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+.result-hero::after{content:'';position:absolute;bottom:0;left:24px;right:24px;height:1px;background:var(--border)}
+.result-type-badge{display:inline-block;padding:5px 16px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:14px;letter-spacing:1px}
+.result-type-name{font-family:'Playfair Display','Noto Sans KR',serif;font-size:26px;font-weight:900;margin-bottom:8px}
+.result-subtitle{font-size:13px;color:var(--text-sub);line-height:1.55}
+.result-oneliner{margin-top:16px;padding:12px 16px;background:var(--warm-bg);border-radius:10px;font-size:13.5px;font-weight:500;color:var(--navy);line-height:1.55;border:1px solid var(--border-light)}
+
+.reveal-section{opacity:0;transform:translateY(24px);transition:all .5s cubic-bezier(.4,0,.2,1)}
+.reveal-section.visible{opacity:1;transform:translateY(0)}
+
+.result-body{padding:28px 24px}
+.result-meter{margin-bottom:28px}
+.meter-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.meter-label{font-size:11px;font-weight:500;width:76px;text-align:right;flex-shrink:0}
+.meter-bar{flex:1;height:8px;background:var(--warm-bg-deep);border-radius:4px;overflow:hidden}
+.meter-fill{height:100%;border-radius:4px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.meter-pct{font-size:11px;font-weight:700;width:36px;flex-shrink:0}
+
+.result-section{margin-bottom:28px}
+.result-section-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--border-light);letter-spacing:0.3px;text-transform:uppercase;font-size:11px;letter-spacing:1px}
+.result-section-body{font-size:14px;line-height:1.85;color:#4B5563}
+.result-section-body p{margin-bottom:14px}
+
+.paradigm-box{background:var(--warm-bg);border-radius:var(--radius-sm);padding:20px;margin:16px 0;border-left:3px solid var(--navy)}
+.paradigm-box .label{font-size:10px;font-weight:700;color:var(--navy);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase}
+.paradigm-box .current{font-size:13px;color:var(--text-light);margin-bottom:6px;text-decoration:line-through}
+.paradigm-box .new{font-size:14px;color:var(--navy);font-weight:600}
+
+.story-box{background:#FFFBF7;border-radius:var(--radius-sm);padding:20px;margin:16px 0;border-left:3px solid var(--type-b)}
+.story-box .label{font-size:10px;font-weight:700;color:var(--type-b);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase}
+.story-box .text{font-size:13.5px;color:#6B5D4A;line-height:1.8}
+
+.action-steps{background:var(--teal-subtle);border-radius:var(--radius-sm);padding:20px;margin:16px 0}
+.action-steps .label{font-size:10px;font-weight:700;color:var(--teal);margin-bottom:12px;letter-spacing:1px;text-transform:uppercase}
+.action-step{display:flex;gap:10px;margin-bottom:10px;font-size:13.5px;color:#374151;line-height:1.6}
+.action-num{background:var(--teal);color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:3px}
+
+.solution-box{background:var(--warm-bg);border-radius:var(--radius-sm);padding:20px;border-left:3px solid var(--teal)}
+.solution-box .sol-label{font-size:10px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase}
+.solution-box .sol-name{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.solution-box .sol-reason{font-size:13.5px;color:#4B5563;line-height:1.75;margin-bottom:10px}
+.solution-box .sol-detail{font-size:11px;color:var(--text-light)}
+
+.result-cta{padding:28px 24px 36px;text-align:center;background:var(--warm-bg);border-top:1px solid var(--border-light)}
+.result-cta h3{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--navy);line-height:1.5}
+.cta-warning{background:#FFFBF7;border-radius:var(--radius-sm);padding:20px;margin-bottom:20px;text-align:left;border:1px solid #F0E6D6}
+.cta-warning .warn-text{font-size:13.5px;color:#7C5B2A;line-height:1.75}
+.cta-warning .warn-text strong{color:#5C3A0E}
+.cta-bridge{text-align:left;font-size:13.5px;color:#4B5563;line-height:1.75;margin:16px 0}
+.cta-bridge strong{color:var(--navy)}
+.cta-benefits{text-align:left;margin:16px auto 24px;max-width:360px}
+.cta-benefit{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:#4B5563;padding:5px 0;line-height:1.5}
+.cta-check{color:var(--teal);font-weight:700;flex-shrink:0;font-size:14px;margin-top:1px}
+.cta-social{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:20px}
+.cta-decision{font-size:14.5px;color:var(--navy);font-weight:600;line-height:1.6;margin:20px 0 18px}
+.btn-cta{display:inline-block;background:var(--teal);color:#fff;border:none;padding:17px 44px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;font-family:inherit;text-decoration:none;box-shadow:0 3px 16px rgba(26,143,106,0.25)}
+.btn-cta:hover{background:var(--teal-hover);transform:translateY(-1px);box-shadow:0 5px 24px rgba(26,143,106,0.3)}
+.btn-cta:active{transform:scale(0.97)}
+
+.share-box{background:var(--card);border-radius:var(--radius-sm);padding:18px 20px;margin-top:18px;border:1px solid var(--border)}
+.share-box .share-prompt{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.4}
+.share-box .share-sub{font-size:11px;color:var(--text-light);margin-bottom:14px}
+.btn-share{display:inline-block;background:var(--card);color:var(--navy);border:1.5px solid var(--border);padding:11px 28px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-share:hover{background:var(--warm-bg);border-color:var(--navy)}
+
+.result-footer{padding:20px 24px;font-size:10px;color:var(--text-light);text-align:center;line-height:1.7}
+
+/* TYPE COLORS — accent only, not background */
+.type-willpower .result-type-badge{background:var(--type-a-bg);color:var(--type-a)}
+.type-willpower .result-type-name{color:var(--type-a)}
+.type-willpower .result-hero{border-top:3px solid var(--type-a-line)}
+.type-environment .result-type-badge{background:var(--type-b-bg);color:var(--type-b)}
+.type-environment .result-type-name{color:var(--type-b)}
+.type-environment .result-hero{border-top:3px solid var(--type-b-line)}
+.type-loop .result-type-badge{background:var(--type-c-bg);color:var(--type-c)}
+.type-loop .result-type-name{color:var(--type-c)}
+.type-loop .result-hero{border-top:3px solid var(--type-c-line)}
+.type-identity .result-type-badge{background:var(--type-d-bg);color:var(--type-d)}
+.type-identity .result-type-name{color:var(--type-d)}
+.type-identity .result-hero{border-top:3px solid var(--type-d-line)}
+
+/* ===== RESPONSIVE: Small mobile (≤375px) ===== */
+@media(max-width:375px){
+  .container{padding:12px}
+  .intro-wrap{padding:36px 16px}
+  .intro h1{font-size:22px}
+  .intro .hook-text{font-size:13.5px}
+  .intro .stats{gap:8px}
+  .intro .stat{padding:12px 14px;min-width:88px}
+  .intro .stat .num{font-size:19px}
+  .btn-start{padding:16px 40px;font-size:15px}
+  .question-card{padding:24px 16px}
+  .q-statement{font-size:14.5px;margin-bottom:24px}
+  .bipolar-labels{gap:8px;margin-bottom:16px}
+  .bipolar-label{font-size:11.5px;padding:11px 8px}
+  .neu-btn{width:40px;height:40px}
+  .neu-btn.size-lg{width:46px;height:46px}
+  .neu-btn.center-neu{width:34px;height:34px}
+  .neu-btn.selected .dot{width:16px;height:16px}
+  .neu-btn.size-lg.selected .dot{width:20px;height:20px}
+  .selector-line{width:8px}
+  .selector-tick{font-size:8px}
+  .btn-next{padding:14px;font-size:14px}
+  .insight-card{padding:28px 16px}
+  .result-hero{padding:28px 16px 24px}
+  .result-type-name{font-size:22px}
+  .result-body{padding:20px 16px}
+  .result-cta{padding:20px 16px 28px}
+  .result-cta h3{font-size:15px}
+  .meter-label{width:64px;font-size:10px}
+  .cta-bridge{font-size:12.5px}
+  .btn-cta{padding:15px 36px;font-size:14px}
+  .solution-box .sol-name{font-size:16px}
+}
+
+/* ===== RESPONSIVE: Tablet (641px–1024px) ===== */
+@media(min-width:641px) and (max-width:1024px){
+  .container{max-width:620px;padding:24px}
+  .intro{max-width:540px}
+  .intro h1{font-size:32px}
+  .intro .hook-text{font-size:15.5px}
+  .intro .stat{padding:18px 24px;min-width:120px}
+  .intro .stat .num{font-size:24px}
+  .question-card{padding:40px 32px}
+  .q-statement{font-size:17px}
+  .bipolar-label{font-size:13.5px;padding:16px 14px}
+  .neu-btn{width:52px;height:52px}
+  .neu-btn.size-lg{width:58px;height:58px}
+  .neu-btn.center-neu{width:42px;height:42px}
+  .selector-line{width:16px}
+  .insight-card{padding:44px 32px}
+  .result-hero{padding:44px 32px 36px}
+  .result-type-name{font-size:30px}
+  .result-body{padding:36px 32px}
+  .result-section-body{font-size:15px}
+  .story-box .text{font-size:14.5px}
+  .result-cta{padding:36px 32px 44px}
+}
+
+/* ===== RESPONSIVE: Desktop (1025px+) ===== */
+@media(min-width:1025px){
+  .container{max-width:680px;padding:32px}
+  .intro-wrap{padding:60px 32px}
+  .intro{max-width:580px}
+  .intro h1{font-size:36px}
+  .intro .hook-text{font-size:16px;max-width:520px}
+  .intro .stats{gap:16px}
+  .intro .stat{padding:20px 28px;min-width:140px}
+  .intro .stat .num{font-size:26px}
+  .intro .stat .label{font-size:11px}
+  .btn-start{padding:20px 64px;font-size:17px}
+  .question-card{padding:48px 40px;border-radius:22px}
+  .q-statement{font-size:18px;margin-bottom:36px}
+  .bipolar-labels{gap:16px}
+  .bipolar-label{font-size:14px;padding:18px 16px;border-radius:14px}
+  .neu-btn{width:56px;height:56px}
+  .neu-btn.size-lg{width:64px;height:64px}
+  .neu-btn.center-neu{width:46px;height:46px}
+  .neu-btn.selected .dot{width:22px;height:22px}
+  .neu-btn.size-lg.selected .dot{width:28px;height:28px}
+  .selector-line{width:20px}
+  .selector-tick{font-size:10px}
+  .btn-next{padding:18px;font-size:16px;border-radius:14px}
+  .insight-card{padding:52px 40px;border-radius:22px}
+  .insight-title{font-size:20px}
+  .insight-text{font-size:15px}
+  .result-card{border-radius:22px}
+  .result-hero{padding:48px 40px 40px}
+  .result-type-name{font-size:32px}
+  .result-subtitle{font-size:14.5px}
+  .result-oneliner{font-size:14.5px;padding:14px 20px}
+  .result-body{padding:40px}
+  .result-section-body{font-size:15.5px}
+  .meter-label{width:88px;font-size:12px}
+  .meter-bar{height:10px}
+  .meter-pct{font-size:12px}
+  .paradigm-box{padding:24px}
+  .story-box{padding:24px}
+  .story-box .text{font-size:14.5px}
+  .action-steps{padding:24px}
+  .action-step{font-size:14.5px}
+  .solution-box{padding:24px}
+  .solution-box .sol-name{font-size:20px}
+  .solution-box .sol-reason{font-size:14.5px}
+  .result-cta{padding:40px 40px 48px}
+  .result-cta h3{font-size:18px}
+  .cta-warning{padding:24px}
+  .cta-bridge{font-size:14.5px}
+  .btn-cta{padding:19px 52px;font-size:16px;border-radius:14px}
+  .share-box{padding:22px 24px}
+  .btn-share{padding:13px 32px;font-size:14px}
+}
+
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- ===== INTRO ===== -->
+<div id="screen-intro" class="intro-wrap">
+<div class="intro">
+<div class="badge">성공을 디자인하라 — 네이버 카페</div>
+<h1>매년 같은 다짐,<br>매번 같은 결과.<br><em>진짜 이유</em>를 아시나요?</h1>
+<div class="accent-line"></div>
+<div class="hook-text">
+새해에 세운 목표의 <strong>80%</strong>가 2월 중순까지 사라지고,<br>
+꾸준히 하겠다는 다짐의 <strong>절반 이상</strong>이 6개월을 넘기지 못합니다.<br><br>
+이것은 <strong>의지력의 문제가 아닙니다.</strong><br>
+당신의 <strong>'패러다임'</strong> — 세상을 바라보는 렌즈 — 이 원인입니다.<br><br>
+패러다임이 바뀌지 않으면, 어떤 방법을 써도 결국 원래로 돌아옵니다.
+</div>
+<div class="stats">
+<div class="stat"><div class="num">3기수</div><div class="label">프로젝트 운영</div></div>
+<div class="stat"><div class="num">75%</div><div class="label">100일 완주율</div></div>
+<div class="stat"><div class="num">3분</div><div class="label">진단 소요시간</div></div>
+</div>
+<div class="social-proof">습관화 프로젝트 참가자들의 실제 데이터를 기반으로 설계된 진단입니다.</div>
+<button class="btn-start" onclick="startQuiz()">내 패러다임 유형 알아보기</button>
+<div class="time-info">12개 질문 · 완전 무료</div>
+</div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="screen-quiz" class="hidden">
+<div class="container">
+<div class="quiz-header">
+<div class="progress-text" id="progress-text"></div>
+<div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+<div id="question-area"></div>
+</div>
+</div>
+
+<!-- ===== LOADING ===== -->
+<div id="screen-loading" class="hidden loading">
+<div class="loading-ring"></div>
+<p>당신의 패러다임을 분석하고 있습니다</p>
+<div class="loading-steps">
+<div class="step" id="ls1" style="animation-delay:0.3s">응답 패턴 분석 중...</div>
+<div class="step" id="ls2" style="animation-delay:1.2s">패러다임 유형 매칭 중...</div>
+<div class="step" id="ls3" style="animation-delay:2.1s">맞춤 해결책 생성 중...</div>
+</div>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div id="screen-result" class="hidden"><div class="container" id="result-container"></div></div>
+
+<script>
+// ===== 12 QUESTIONS: Bias-free, balanced measurement, behavioral recall =====
+// Measurement count: A=6, B=6, C=6, D=5 (+ D-verification Q12)
+// Mid-value(3) gives 0.5 to both sides
+function S(w,e,l,i){return{willpower:w,environment:e,loop:l,identity:i};}
+const questions=[
+  // Q1: willpower vs environment
+  {statement:"하기로 한 일이 있는데 하기 싫은 날, 당신은 어떤 쪽에 더 가깝나요?",left:"싫어도 억지로 해낸다.\n안 하면 하루 종일 찝찝하다",right:"오늘은 푹 쉬고,\n내일 하기로 한다",
+    score:function(v){if(v<=2)return S(6-2*v,0,0,0);if(v>=4)return S(0,2*v-6,0,0);return S(0.5,0.5,0,0);}},
+  // Q2: loop vs identity (FIX - 양쪽 모두 "하는 사람", 동기 원천의 차이)
+  {statement:"무언가에 몰입할 때, 당신의 에너지는 어떤 편인가요?",left:"강렬하게 타오르다가\n어느 순간 확 꺼지는 편이다",right:"특별히 불타오르진 않지만\n꾸준히 해나가는 편이다",
+    score:function(v){if(v<=2)return S(0,0,6-2*v,0);if(v>=4)return S(0,0,0,2*v-6);return S(0,0,0.5,0.5);}},
+  // Q3: environment vs loop
+  {statement:"무언가를 꾸준히 하지 못할 때, 그 이유는 어느 쪽에 더 가깝나요?",left:"바쁘거나 여건이 안 돼서\n자연스럽게 밀린다",right:"처음의 결심이\n시간이 지나면 흐려진다",
+    score:function(v){if(v<=2)return S(0,6-2*v,0,0);if(v>=4)return S(0,0,2*v-6,0);return S(0,0.5,0.5,0);}},
+  // Q4: willpower vs identity (편향 제거 버전)
+  {statement:"새로운 것을 시작할 때, 당신의 방식은?",left:"확실하게 알아보고\n만반의 준비를 갖춘 뒤 시작한다",right:"대략적인 방향만 잡고\n부딪히면서 조정해나간다",
+    score:function(v){if(v<=2)return S(6-2*v,0,0,0);if(v>=4)return S(0,0,0,2*v-6);return S(0.5,0,0,0.5);}},
+  // Q5: loop vs environment (NEW - 반복 vs 환경 구분)
+  {statement:"과거에 포기했던 것을 돌아보면, 주된 원인은?",left:"시간이 지나면서 처음의 열정이 식고,\n동기가 사라졌기 때문이다",right:"생활 환경이 바뀌거나\n다른 우선순위에 밀렸기 때문이다",
+    score:function(v){if(v<=2)return S(0,0,6-2*v,0);if(v>=4)return S(0,2*v-6,0,0);return S(0,0.5,0.5,0);}},
+  // Q6: [행동회상] willpower vs identity (FIX - 양쪽 모두 "완수한 사람", 동기의 차이)
+  {statement:"지난 한 달을 떠올려보세요. 하기로 한 일을 해낼 때 주된 동력은 무엇이었나요?",left:"\"해야 하니까\" 하는 의무감이\n주된 원동력이었다",right:"\"하고 싶으니까\" 하는 마음이\n자연스럽게 이끌었다",
+    score:function(v){if(v<=2)return S(6-2*v,0,0,0);if(v>=4)return S(0,0,0,2*v-6);return S(0.5,0,0,0.5);}},
+  null, // insight break
+  // Q7: environment vs identity
+  {statement:"혼자 할 때와 누군가와 함께 할 때를 비교하면?",left:"함께 하면 확실히 더 오래가는데,\n그런 환경을 만들기가 쉽지 않다",right:"상황에 따라 다르지만,\n결국 중요한 건 내가 정한 기준이다",
+    score:function(v){if(v<=2)return S(0,6-2*v,0,0);if(v>=4)return S(0,0,0,2*v-6);return S(0,0.5,0,0.5);}},
+  // Q8: willpower vs loop (양쪽 모두 "지속하는 사람", 패턴의 차이)
+  {statement:"당신이 무언가를 오래 지속할 때, 그 패턴은?",left:"꾸준히 같은 페이스를 유지한다.\n기복 없이 매일 해내는 편이다",right:"열정적으로 몰아치다가 쉬고,\n다시 몰아치는 파도형이다",
+    score:function(v){if(v<=2)return S(6-2*v,0,0,0);if(v>=4)return S(0,0,2*v-6,0);return S(0.5,0,0.5,0);}},
+  // Q9: [행동회상] environment vs identity (NEW)
+  {statement:"지난 한 달 동안, 계획대로 안 된 일이 있을 때 실제로 어떻게 했나요?",left:"상황이 안 맞아서\n다음 기회를 기다렸다",right:"방법을 바꿔서라도\n어떻게든 진행시켰다",
+    score:function(v){if(v<=2)return S(0,6-2*v,0,0);if(v>=4)return S(0,0,0,2*v-6);return S(0,0.5,0,0.5);}},
+  // Q10: loop vs identity (편향 제거 버전)
+  {statement:"이루고 싶은 것을 떠올릴 때, 먼저 드는 감정은?",left:"\"이번에야말로!\"라는\n뜨거운 결의가 솟아오른다",right:"담담하게 할 일 목록이\n머릿속에 정리된다",
+    score:function(v){if(v<=2)return S(0,0,6-2*v,0);if(v>=4)return S(0,0,0,2*v-6);return S(0,0,0.5,0.5);}},
+  // Q11: willpower vs environment (NEW - A/B 구분 강화)
+  {statement:"목표를 향한 길이 막혔을 때, 당신의 첫 번째 반응은?",left:"더 세게 밀어붙인다.\n안 되면 될 때까지 한다",right:"일단 상황을 파악하고\n조건이 맞을 때 다시 시도한다",
+    score:function(v){if(v<=2)return S(6-2*v,0,0,0);if(v>=4)return S(0,2*v-6,0,0);return S(0.5,0.5,0,0);}},
+  // Q12: identity 검증 (D 과잉판정 방지)
+  {statement:"솔직하게 답해주세요. 최근 3개월간, 스스로 정한 기준을 실제로 지킨 비율은?",left:"솔직히 절반도 못 지켰다.\n마음과 행동 사이에 간극이 크다",right:"대부분 지켰다.\n안 되는 날에도 최소한은 했다",
+    score:function(v){if(v<=2)return S(0,0,2,0);if(v>=4)return S(0,0,0,2*v-6);return S(0,0,0.5,0.5);},isVerification:true},
+];
+const insightBreak={title:"잠깐, 흥미로운 이야기를 하나 해드릴게요",text:"지금까지의 응답에서 하나의 패턴이 보이기 시작합니다.\n\n재미있는 점은, 습관화 프로젝트에 참여한 사람들에게서도 뚜렷한 패턴이 발견되었다는 것입니다. <strong>같은 목표를 세워도 100일을 완주한 사람과 2주 만에 멈춘 사람의 차이</strong>는 의외의 곳에 있었습니다.\n\n나머지 6개 질문으로 당신의 패턴을 더 구체적으로 파악해보겠습니다.",source:"— 습관화 프로젝트 참가자 분석 결과"};
+function getButtonText(idx,total){if(idx>=total-1)return"결과 확인하기 ✨";if(idx>=total-2)return"마지막이에요!";if(idx>=total-3)return"거의 다 왔어요 💪";if(idx>=total-4)return"조금만 더!";if(idx>=Math.floor(total/2))return"절반 넘었어요!";return["좋아요, 다음으로","계속해볼게요","잘하고 있어요","좋은 흐름이에요","거의 절반!"][idx%5];}
+const types={
+  willpower:{name:"의지력 전사형",badge:"TYPE A",color:"type-willpower",subtitle:"강한 책임감과 끈기로 밀어붙이는 유형",oneliner:"당신의 성실함은 가장 큰 자산입니다. 다만 그 힘의 방향을 바꿀 때 진짜 변화가 시작됩니다.",
+    desc:["당신의 강점은 명확합니다. 한번 해야겠다고 마음먹으면 끝까지 밀어붙이는 추진력, 남들이 쉴 때도 자리를 지키는 인내심, 책임감 있게 약속을 지키려는 성실함. 이것은 쉽게 가질 수 없는 귀한 자질입니다.","도전 과제는 이것입니다. 의지력은 유한한 자원입니다. 참고 버티는 방식은 단기적으로 성과를 내지만, 에너지가 고갈되는 순간 한꺼번에 무너질 수 있습니다. 또한 충분히 준비되었다고 느껴질 때까지 시작을 미루는 경향이 있다면, 실행의 타이밍을 놓칠 수 있습니다.","원하는 것을 이루기 위해서는 반드시 대가를 지불해야 하며, 그 대가는 \"불편함을 기꺼이 마주하는 것\"입니다. 다만 참는 것이 아니라, 과정 자체에 집중하는 방식으로 전환할 때 당신의 성실함이 진짜 힘을 발휘합니다."],paradigm:{current:"\"나는 열심히 참고 노력해야 목표를 이룰 수 있다\"",new:"\"나는 이미 원하는 모습의 사람이다. 그에 맞는 행동은 자연스럽다\""},story:"한 참가자는 새로운 분야에 도전하면서 60일차에 극심한 슬럼프에 빠졌습니다. 그 불편함이 성장의 증거라는 것을 깨달은 순간, 모든 것이 달라졌습니다. 또 다른 참가자는 강의 중독에 빠져 공부만 하고 실행하지 않았지만, 100일 동안 매일 콘텐츠를 만들어 올리자 유튜브 조회수 21만 회를 기록했습니다.",actions:["매일 아침 5분, 목표를 이룬 자신의 모습을 구체적으로 시각화하세요","\"참는 것\"에서 \"이해하는 것\"으로 — 내면을 관찰하는 글쓰기를 시작하세요","의지력이 아닌 환경과 시스템을 설계하세요 (준비물을 전날 밤에 꺼놓기)"],solution:{program:"독서챌린지",reason:"매일 짧은 글쓰기를 통해 자신의 내면을 관찰하고, 의지력이 아닌 자기 인식의 힘으로 변화를 시작하는 훈련입니다.",detail:"매일 독서 인증 (사진 + 글) | 22일 성공 시 참가비 전액 환급"}},
+  environment:{name:"환경 의존형",badge:"TYPE B",color:"type-environment",subtitle:"현실적 판단력이 뛰어나지만, 시작이 늦어지는 유형",oneliner:"당신의 현실감각은 큰 강점입니다. 다만 완벽한 조건은 오지 않습니다.",
+    desc:["당신의 강점은 상황을 정확하게 읽는 능력입니다. 무모하게 뛰어들지 않고, 현실적 제약을 파악한 뒤 움직이는 신중함이 있습니다. 이 덕분에 큰 실수를 피하고, 효율적으로 자원을 사용할 수 있습니다.","도전 과제는 이것입니다. \"현실적 판단\"이 때로는 행동을 시작하지 않는 완벽한 이유가 됩니다. 시간이 없어서, 여건이 안 돼서, 환경이 바뀌면 — 이런 생각이 반복되면 시작 자체가 계속 미뤄집니다. 또한 혼자서는 동력을 유지하기 어려운 경향이 있습니다.","무엇을 선택하든 나의 결정이고, 그에 대한 결과도 내가 책임지는 것입니다. 환경을 탓하기 전에, '이 환경에서 내가 선택할 수 있는 것'에 집중하세요. 그리고 함께 하는 사람들 안에서 건강한 자극을 받을 때, 당신의 현실감각이 진짜 추진력으로 바뀝니다."],paradigm:{current:"\"조건이 맞으면 그때 시작해야 제대로 할 수 있다\"",new:"\"지금 이 자리에서 할 수 있는 것부터 시작하면 조건이 따라온다\""},story:"한 참가자는 '회사 일이 바빠서, 육아 때문에' 늘 시간이 없다고 생각했습니다. 매일 30분만 투자하기로 결심하고, 함께 하는 사람들의 인증을 보며 자극을 받아 100일을 완주했습니다. 또 다른 참가자는 에어비앤비 오픈에 도전하며 세 번의 가계약 파기를 겪었지만, 동료의 응원 덕에 결국 성공했습니다.",actions:["\"완벽한 1시간\"이 아니라 \"불완전한 10분\"부터 시작하세요","같은 목표를 가진 사람들과 매일의 행동을 공유하세요","\"할 수 없는 이유\" 대신 \"할 수 있는 가장 작은 것\"을 매일 하나 찾으세요"],solution:{program:"북클럽",reason:"같은 방향으로 성장하려는 사람들과 직접 만나는 경험이, \"혼자서는 안 된다\"는 믿음을 \"함께하면 된다\"로 바꿔줍니다.",detail:"월 2회 오프라인 모임 | 깊이 있는 대화와 함께 성장"}},
+  loop:{name:"결심 반복형",badge:"TYPE C",color:"type-loop",subtitle:"강렬한 시작 에너지를 가졌지만, 지속이 과제인 유형",oneliner:"당신의 열정과 도전 정신은 누구보다 강합니다. 이제 그 에너지를 유지하는 구조가 필요합니다.",
+    desc:["당신의 강점은 시작하는 에너지입니다. 새로운 것에 뛰어드는 용기, 변화를 두려워하지 않는 도전 정신, 목표 앞에서 활활 타오르는 열정. 많은 사람들이 시작조차 못 하는데, 당신은 항상 시작합니다. 이것은 대단한 자질입니다.","도전 과제는 이것입니다. 시작의 열정이 2~3주 뒤에 식으면, 어느새 원래의 나로 돌아가 있습니다. 결심 → 시작 → 열정 소진 → 포기 → 다시 결심이라는 사이클이 수년째 반복될 수 있습니다. 감정은 일시적이지만, 잠재의식에 각인된 패러다임은 영구적입니다.","적당한 성과는 적당한 노력으로 얻을 수 있지만, 진짜 변화는 삶의 우선순위를 바꿀 때만 일어납니다. 열정이 식은 후에도 자동으로 행동하게 만드는 구조에 자신을 넣으세요. 첫 번째 시도에서 실패해도 괜찮습니다. 구조 안에 있으면 결국 바뀝니다."],paradigm:{current:"\"이번에야말로 진짜 열심히 해서 바꿔야지\"",new:"\"나는 매일 조금씩 성장하는 사람이다. 결심이 필요 없다\""},story:"한 참가자는 첫 번째, 두 번째 도전 모두 무너졌습니다. 세 번째에 혼신을 다해 100일을 단 하루도 쉬지 않았고, 마라톤 풀코스 도전까지 이르렀습니다. 또 다른 참가자는 반강제 참여했지만, 한 달이 지나자 성취감에 빠져들기 시작했습니다.",actions:["\"결심\"이 아니라 \"선언\"을 하세요 — 글로 쓰고, 사람들 앞에서 공유하세요","매일의 작은 행동을 기록하고 눈에 보이게 만드세요","열정이 식어도 움직이게 만드는 구조에 자신을 넣으세요"],solution:{program:"습관화 프로젝트",reason:"100일이라는 구조 안에서, \"결심의 열정\"이 아니라 \"구조의 관성\"으로 움직이는 경험을 합니다.",detail:"100일간 매일 인증 | 오프라인 모임 | 완주율 75%"}},
+  identity:{name:"패러다임 전환형",badge:"TYPE D",color:"type-identity",subtitle:"내면의 기준으로 스스로 움직이는 유형",oneliner:"방향도 맞고, 실행도 하고 있습니다. 함께 하면 속도가 달라집니다.",
+    desc:["당신의 강점은 자기 기준이 명확하다는 것입니다. 외부의 자극이 없어도 스스로 동력을 만들어내고, 결과보다 과정에 집중하며, 좌절 앞에서도 방향을 잃지 않습니다. '아는 것'에 그치지 않고 '실제로 하고 있다'는 것이 이 유형의 핵심입니다.","다만 주의할 점이 있습니다. 진정한 TYPE D는 매우 드뭅니다. '알고 있다'와 '실제로 하고 있다' 사이의 간극은 생각보다 큽니다. 누군가의 도움이나 좋은 환경 덕분에 성과를 낸 것이라면, 그것은 TYPE D가 아닐 수 있습니다. 스스로에게 솔직해지는 것이 중요합니다.","당신에게 필요한 것은 이 방향을 더 깊이 있게 가속하는 것입니다. 같은 방향으로 가는 사람들과 함께할 때, 혼자일 때는 발견하지 못했던 맹점이 보이고 변화의 속도가 달라집니다."],paradigm:{current:null,new:"\"나는 원하는 것을 이미 가진 사람처럼 생각하고 행동한다\""},story:"한 참가자는 앱 개발에 도전하여 50시간의 결과물이 사라졌습니다. 그날 밤 마음을 정리하고, 다음 날 다시 시작했습니다. 운동, 콘텐츠, 부동산, 영어, 투자, 독서 — 분야는 다르지만 이런 태도를 가진 사람들은 결국 이뤄냈습니다.",actions:["현재의 목표를 \"이미 이룬 상태\"로 매일 시각화하세요","같은 패러다임을 가진 사람들과 함께 성장의 속도를 높이세요","당신의 변화 과정을 기록하고 공유하세요 — 그것이 다른 사람의 영감이 됩니다"],solution:{program:"습관화 프로젝트",reason:"같은 방향으로 가는 사람들과 함께 100일을 달리면, 혼자일 때보다 속도와 깊이가 달라집니다.",detail:"100일간 매일 인증 | 오프라인 모임 | 완주율 75%"}}
+};
+let qIndex=0,scores={willpower:0,environment:0,loop:0,identity:0},insightShown=false,currentSelection=null,verificationVal=null;
+const totalQuestions=questions.filter(q=>q!==null).length,insightAfterQ=6;
+function startQuiz(){gtag('event','quiz_start');document.getElementById('screen-intro').classList.add('hidden');document.getElementById('screen-quiz').classList.remove('hidden');qIndex=0;scores={willpower:0,environment:0,loop:0,identity:0};insightShown=false;verificationVal=null;showStep();}
+function showStep(){
+  if(qIndex===insightAfterQ&&!insightShown){showInsightBreak();return;}
+  let arrIdx=qIndex<insightAfterQ?qIndex:qIndex+1;
+  if(arrIdx>=questions.length||!questions[arrIdx]){showLoadingScreen();return;}
+  let q=questions[arrIdx],pct=((qIndex+1)/totalQuestions*100).toFixed(1);
+  document.getElementById('progress-text').textContent=`${qIndex+1} / ${totalQuestions}`;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  currentSelection=null;
+  let btnText=getButtonText(qIndex,totalQuestions);
+  let html=`<div class="question-card"><div class="q-number">Q${qIndex+1}</div><div class="q-statement">${q.statement}</div><div class="bipolar-area"><div class="bipolar-labels"><div class="bipolar-label" id="label-left">${q.left.replace(/\n/g,'<br>')}</div><div class="bipolar-label" id="label-right">${q.right.replace(/\n/g,'<br>')}</div></div><div class="selector-row"><button class="neu-btn size-lg" data-val="1" onclick="selectVal(this,1)"><span class="dot"></span></button><div class="selector-line"></div><button class="neu-btn" data-val="2" onclick="selectVal(this,2)"><span class="dot"></span></button><div class="selector-line"></div><button class="neu-btn center-neu" data-val="3" onclick="selectVal(this,3)"><span class="dot"></span></button><div class="selector-line"></div><button class="neu-btn right-side" data-val="4" onclick="selectVal(this,4)"><span class="dot"></span></button><div class="selector-line"></div><button class="neu-btn size-lg right-side" data-val="5" onclick="selectVal(this,5)"><span class="dot"></span></button></div><div class="selector-ticks"><div class="selector-tick">매우 그렇다</div><div class="selector-tick">그렇다</div><div class="selector-tick">중간</div><div class="selector-tick">그렇다</div><div class="selector-tick">매우 그렇다</div></div></div><button class="btn-next" id="btn-next" onclick="nextStep()">${btnText}</button></div>`;
+  const area=document.getElementById('question-area');area.innerHTML=html;area.dataset.arrIdx=arrIdx;
+}
+function selectVal(el,val){
+  currentSelection=val;
+  const r=document.createElement('span');r.classList.add('ripple');const rect=el.getBoundingClientRect();r.style.width=r.style.height=Math.max(rect.width,rect.height)+'px';r.style.left='0px';r.style.top='0px';el.appendChild(r);setTimeout(()=>r.remove(),500);
+  document.querySelectorAll('.neu-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');
+  document.getElementById('label-left').classList.toggle('active-l',val<=2);document.getElementById('label-right').classList.toggle('active-r',val>=4);document.getElementById('btn-next').classList.add('active');
+}
+function showInsightBreak(){
+  let pct=(insightAfterQ/totalQuestions*100).toFixed(1);document.getElementById('progress-text').textContent='잠깐!';document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('question-area').innerHTML=`<div class="insight-card"><div class="insight-icon">💡</div><div class="insight-title">${insightBreak.title}</div><div class="insight-text">${insightBreak.text.replace(/\n\n/g,'<br><br>')}</div><div class="insight-source">${insightBreak.source}</div><button class="btn-continue" onclick="insightShown=true;showStep()">계속 진단하기</button></div>`;
+}
+function nextStep(){
+  if(!currentSelection)return;let arrIdx=parseInt(document.getElementById('question-area').dataset.arrIdx);
+  let q=questions[arrIdx];let s=q.score(currentSelection);Object.keys(s).forEach(k=>scores[k]+=s[k]);
+  if(q.isVerification)verificationVal=currentSelection;
+  gtag('event','question_answer',{question_number:qIndex+1,answer_value:currentSelection});
+  const card=document.querySelector('.question-card');if(card)card.classList.add('exiting');
+  setTimeout(()=>{qIndex++;qIndex>=totalQuestions?showLoadingScreen():showStep();},220);
+}
+function showLoadingScreen(){document.getElementById('screen-quiz').classList.add('hidden');document.getElementById('screen-loading').classList.remove('hidden');setTimeout(()=>document.getElementById('ls1').classList.add('active'),300);setTimeout(()=>document.getElementById('ls2').classList.add('active'),1200);setTimeout(()=>document.getElementById('ls3').classList.add('active'),2100);setTimeout(()=>{document.getElementById('screen-loading').classList.add('hidden');showResult();},3000);}
+function showResult(){
+  // D-calibration: if verification Q12 shows gap (val<=2), reduce identity score
+  if(verificationVal!==null&&verificationVal<=2){scores.identity=Math.max(0,scores.identity*0.5);}
+  const total=Object.values(scores).reduce((a,b)=>a+b,0)||1,sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]),topKey=sorted[0][0],type=types[topKey],pcts={};
+  gtag('event','quiz_complete',{result_type:type.badge,result_name:type.name});
+  sorted.forEach(([k,v])=>pcts[k]=Math.round(v/total*100));
+  const mc={willpower:'var(--type-a)',environment:'var(--type-b)',loop:'var(--type-c)',identity:'var(--type-d)'},mn={willpower:'의지력 전사',environment:'환경 의존',loop:'결심 반복',identity:'패러다임 전환'};
+  // --- 변경3: 유형별 SVG 아이콘 ---
+  const typeIcons={
+    willpower:`<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36" cy="36" r="33" stroke="var(--type-a)" stroke-width="2" opacity=".15"/><circle cx="36" cy="36" r="25" stroke="var(--type-a)" stroke-width="1.5" opacity=".25"/><path d="M36 14l3.5 14-3.5-3.5L32.5 28Z" fill="var(--type-a)"/><line x1="36" y1="28" x2="36" y2="52" stroke="var(--type-a)" stroke-width="2.5" stroke-linecap="round"/><line x1="27" y1="39" x2="36" y2="34" stroke="var(--type-a)" stroke-width="2" stroke-linecap="round"/><line x1="45" y1="39" x2="36" y2="34" stroke="var(--type-a)" stroke-width="2" stroke-linecap="round"/></svg>`,
+    environment:`<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36" cy="36" r="33" stroke="var(--type-b)" stroke-width="2" opacity=".15"/><rect x="20" y="27" width="32" height="22" rx="4" stroke="var(--type-b)" stroke-width="2" fill="none" opacity=".35"/><circle cx="36" cy="31" r="5" stroke="var(--type-b)" stroke-width="2" fill="none"/><path d="M25 45q8-7 11-7t11 7" stroke="var(--type-b)" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="15" y1="36" x2="20" y2="36" stroke="var(--type-b)" stroke-width="1.5" stroke-linecap="round"/><line x1="52" y1="36" x2="57" y2="36" stroke="var(--type-b)" stroke-width="1.5" stroke-linecap="round"/><line x1="36" y1="15" x2="36" y2="20" stroke="var(--type-b)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    loop:`<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36" cy="36" r="33" stroke="var(--type-c)" stroke-width="2" opacity=".15"/><path d="M26 48c0-14 7-20 10-20s6 3.5 6 7-3 7-6 7-4.5-3 -2.5-7" stroke="var(--type-c)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="47" cy="47" r="3.5" fill="var(--type-c)" opacity=".5"/><path d="M45 43l5.5 5.5M45 48.5l5.5-5.5" stroke="var(--type-c)" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    identity:`<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36" cy="36" r="33" stroke="var(--type-d)" stroke-width="2" opacity=".15"/><path d="M21 44l10.5-10.5 7 7L51 25" stroke="var(--type-d)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polygon points="47,21 55,25 51,29" fill="var(--type-d)"/><circle cx="21" cy="44" r="2.5" fill="var(--type-d)" opacity=".35"/><circle cx="51" cy="25" r="2.5" fill="var(--type-d)"/></svg>`
+  };
+  let metersHtml=sorted.map(([k])=>{let pct=pcts[k],isTop=k===topKey;return`<div class="meter-row"><div class="meter-label" style="color:${isTop?mc[k]:'var(--text-light)'};font-weight:${isTop?700:400}">${mn[k]}</div><div class="meter-bar"><div class="meter-fill" data-width="${pct}" style="background:${mc[k]};opacity:${isTop?1:0.35}"></div></div><div class="meter-pct" style="color:${isTop?mc[k]:'var(--text-light)'}">${pct}%</div></div>`;}).join('');
+  let descHtml=type.desc.map(p=>`<p>${p}</p>`).join('');
+  let paradigmHtml=type.paradigm.current?`<div class="paradigm-box"><div class="label">패러다임 전환 포인트</div><div class="current">${type.paradigm.current}</div><div class="new">${type.paradigm.new}</div></div>`:`<div class="paradigm-box"><div class="label">당신의 핵심 패러다임</div><div class="new">${type.paradigm.new}</div></div>`;
+  const programLinks={willpower:'https://cafe.naver.com/sd161921/16388',environment:'https://cafe.naver.com/sd161921/16390',loop:'https://cafe.naver.com/sd161921/16392',identity:'https://cafe.naver.com/sd161921/16392'};
+  // --- 변경5: 결과 페이지 3섹션 (패러다임 분석+전환포인트 / 극복 사례 / 맞춤 프로그램) ---
+  // --- 변경6: 듀얼 CTA ---
+  const div=document.getElementById('screen-result');div.className=type.color;div.classList.remove('hidden');
+  document.getElementById('result-container').innerHTML=`<div class="result-card"><div class="result-hero"><div style="text-align:center;margin-bottom:8px">${typeIcons[topKey]}</div><div class="result-type-badge">${type.badge}</div><div class="result-type-name">${type.name}</div><div class="result-subtitle">${type.subtitle}</div><div class="result-oneliner">${type.oneliner}</div><div style="margin-top:12px;font-size:12px;color:var(--teal);font-weight:600;letter-spacing:0.5px">맞춤 추천 → ${type.solution.program}</div></div><div class="result-body"><div class="result-meter reveal-section">${metersHtml}</div><div class="result-section reveal-section"><div class="result-section-title">당신의 패러다임 분석</div><div class="result-section-body">${descHtml}</div>${paradigmHtml}</div><div class="result-section reveal-section"><div class="result-section-title">이 유형을 극복한 사람의 이야기</div><div class="story-box"><div class="label">습관화 프로젝트 실제 사례</div><div class="text">${type.story}</div></div></div><div class="reveal-section" style="text-align:center;margin:24px 0"><a href="https://cafe.naver.com/sd161921/16382" target="_blank" class="btn-cta" onclick="gtag('event','cta_click',{result_type:'${type.badge}',cta_target:'mid_story'})" style="font-size:14px;padding:15px 32px">이 유형이 바뀐 사람들의 전체 이야기 보기</a></div><div class="result-section reveal-section"><div class="result-section-title">당신에게 맞는 첫 번째 스텝</div><div class="solution-box"><div class="sol-label">맞춤 추천 프로그램</div><div class="sol-name">${type.solution.program}</div><div class="sol-reason">${type.solution.reason}</div><div class="sol-detail">${type.solution.detail}</div><a href="${programLinks[topKey]}" target="_blank" style="display:inline-block;margin-top:14px;padding:10px 24px;background:var(--teal);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none" onclick="gtag('event','cta_click',{result_type:'${type.badge}',cta_target:'program_detail'})">프로그램 자세히 보기 →</a></div></div></div></div><div class="result-cta reveal-section"><h3>지금의 패러다임이 바뀌면,<br>결과는 저절로 따라옵니다.</h3><a href="https://cafe.naver.com/sd161921/16382" target="_blank" class="btn-cta" onclick="gtag('event','cta_click',{result_type:'${type.badge}',cta_target:'integrated_landing'})">나도 바꿀 수 있는지 확인하기</a><div class="share-box" style="margin-top:20px"><div class="share-prompt">친구에게도 알려주세요</div><div style="display:flex;flex-direction:column;gap:8px;margin-top:12px"><button class="btn-cta" onclick="shareQuizInvite('${topKey}')" style="font-size:14px;padding:13px 20px;width:100%">🔗 이 진단 해봐! 보내기</button><button class="btn-share" onclick="shareResult('${topKey}')" style="width:100%">📋 내 결과 보내기</button></div></div></div><div class="result-footer">성공을 디자인하라 | 네이버 카페<br>이 진단은 16권의 마인드셋·습관·행동 관련 도서와<br>습관화 프로젝트 참가자들의 실제 데이터를 기반으로 설계되었습니다.</div></div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{document.querySelectorAll('.meter-fill').forEach(el=>{el.style.width=el.dataset.width+'%';});},400);
+  const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:0.12});
+  document.querySelectorAll('.reveal-section').forEach(s=>observer.observe(s));
+}
+function shareQuizInvite(typeKey){gtag('event','share_click',{share_type:'quiz_invite',result_type:typeKey});const t=types[typeKey],text=`나는 [${t.name}] 나왔어! 너도 해봐 👉 https://superdaddy-161921.github.io/paradigm-test/`;if(navigator.share)navigator.share({title:'패러다임 자가진단',text,url:'https://superdaddy-161921.github.io/paradigm-test/'}).catch(()=>{});else copyText(text);}
+function shareResult(typeKey){gtag('event','share_click',{share_type:'result_share',result_type:typeKey});const t=types[typeKey],text=`[패러다임 자가진단 결과]\n${t.badge} — ${t.name}\n"${t.subtitle}"\n\n${t.oneliner}\n\n너도 해봐 👉 https://superdaddy-161921.github.io/paradigm-test/`;if(navigator.share)navigator.share({title:'나는 '+t.name+' 나왔는데, 너는?',text}).catch(()=>{});else copyText(text);}
+function copyText(text){if(navigator.clipboard)navigator.clipboard.writeText(text).then(()=>showToast('클립보드에 복사되었습니다!')).catch(()=>fallbackCopy(text));else fallbackCopy(text);}
+function fallbackCopy(text){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('클립보드에 복사되었습니다!');}
+function showToast(msg){let t=document.getElementById('v10-toast');if(!t){t=document.createElement('div');t.id='v10-toast';t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#1F2937;color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;z-index:999;opacity:0;transition:all .3s ease;white-space:nowrap';document.body.appendChild(t);}t.textContent=msg;requestAnimationFrame(()=>{t.style.transform='translateX(-50%) translateY(0)';t.style.opacity='1';});setTimeout(()=>{t.style.transform='translateX(-50%) translateY(80px)';t.style.opacity='0';},2000);}
+</script>
+</body>
+</html>
